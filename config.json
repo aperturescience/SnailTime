@@ -1,0 +1,7 @@
+{
+  "third_party": {
+    "railtime": {
+      "endpoint": "http://services.infrabel.be/web/prd-irt/PublicCommunicationRestService.svc/"
+    }
+  }
+}
