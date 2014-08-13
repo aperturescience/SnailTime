@@ -37,7 +37,7 @@ app.use('/stations', require('./routes/stations'));
 /**
  * Development error handler
  */
-if (app.get('env') === 'development') {
+if (app.get('env') !== 'production') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.json('error', {
