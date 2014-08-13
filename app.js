@@ -23,9 +23,10 @@ app.use(function(req, res, next) {
 /**
  * Routes
  */
-app.use('/',        require('./routes/index'));
-app.use('/status',  require('./routes/status'));
-app.use('/stations', require('./routes/stations'));
+app.all('*',          require('./routes/all'));
+app.use('/',          require('./routes/index'));
+app.use('/status',    require('./routes/status'));
+app.use('/stations',  require('./routes/stations'));
 
 /**
  * 404 handler
