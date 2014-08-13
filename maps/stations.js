@@ -3,7 +3,9 @@
 var _       = require('lodash-node'),
     moment  = require('moment');
 
-exports.mapStation = function(data) {
+exports.mapStation = function(data, locale) {
+
+  locale = locale || null;
 
   var trains = _.map(data.Trains, function(train) {
 
@@ -12,7 +14,7 @@ exports.mapStation = function(data) {
       'arrival_str'     : (function() {
         return train.ArrivalDateTime === null
           ? null
-          : moment(train.ArrivalDateTime).zone('+0200').fromNow();
+          : moment(train.ArrivalDateTime).locale(locale).zone('+0200').fromNow();
       })(),
       'arrival_delay'   : train.ArrivalDelay,
       'has_arrived'     : train.ArrivalDetected,
@@ -21,7 +23,7 @@ exports.mapStation = function(data) {
       'departure_str'   : (function() {
         return train.DepartureDateTime === null
           ? null
-          : moment(train.DepartureDateTime).zone('+0200').fromNow();
+          : moment(train.DepartureDateTime).locale(locale).zone('+0200').fromNow();
       })(),
       'departure_delay' : train.DepartureDelay,
       'has_departed'    : train.DepartureDetected,

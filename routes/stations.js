@@ -32,7 +32,7 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
-    body = maps.mapStation(body);
+    body = maps.mapStation(body, req.locale);
 
     var sort, reject;
 
