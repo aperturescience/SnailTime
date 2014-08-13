@@ -1,11 +1,17 @@
 'use strict';
 
 var express = require('express');
-var router = express.Router();
+var router  = express.Router();
+var pjson   = require('../package.json');
 
-/* GET home page. */
+/* GET index */
 router.get('/', function(req, res) {
-  res.send('http://demey.io/');
+  res.json({
+    'version'     : pjson.version,
+    'author'      : pjson.contributors,
+    'website'     : pjson.website,
+    'repository'  : pjson.repository.url
+  });
 });
 
 module.exports = router;
