@@ -10,7 +10,7 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(locale(['nl', 'fr', 'en']));
+app.use(locale(['nl', 'fr', 'de', 'en']));
 
 /**
  * Custom middleware
