@@ -10,7 +10,7 @@ exports.mapStation = function(data, locale) {
   var trains = _.map(data.Trains, function(train) {
 
     return {
-      'arrival'         : moment(train.ArrivalDateTime).zone('+0200').unix() || null,
+      'arrival'         : moment(train.ArrivalDateTime).zone('+0200').toISOString() || null,
       'arrival_str'     : (function() {
         return train.ArrivalDateTime === null
           ? null
@@ -19,7 +19,7 @@ exports.mapStation = function(data, locale) {
       'arrival_delay'   : train.ArrivalDelay,
       'has_arrived'     : train.ArrivalDetected,
 
-      'departure'       : moment(train.DepartureDateTime).zone('+0200').unix() || null,
+      'departure'       : moment(train.DepartureDateTime).zone('+0200').toISOString() || null,
       'departure_str'   : (function() {
         return train.DepartureDateTime === null
           ? null
