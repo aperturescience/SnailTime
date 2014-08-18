@@ -23,11 +23,12 @@ app.use(function(req, res, next) {
 /**
  * Routes
  */
-app.all('*',          require('./routes/all'));
-app.use('/',          require('./routes/index'));
-app.use('/status',    require('./routes/status'));
-app.use('/stations',  require('./routes/stations'));
-app.use('/trains',    require('./routes/trains'));
+app.all('*',            require('./routes/all'));
+app.use('/',            require('./routes/index'));
+app.use('/status',      require('./routes/status'));
+app.use('/stations',    require('./routes/stations'));
+app.use('/trains',      require('./routes/trains'));
+app.use('/disruptions', require('./routes/disruptions'));
 
 /**
  * 404 handler
