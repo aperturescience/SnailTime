@@ -29,6 +29,7 @@ app.use('/status',      require('./routes/status'));
 app.use('/stations',    require('./routes/stations'));
 app.use('/trains',      require('./routes/trains'));
 app.use('/disruptions', require('./routes/disruptions'));
+app.use('/routes',      require('./routes/routes'));
 
 /**
  * 404 handler
