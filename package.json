@@ -9,7 +9,7 @@
     "url": "https://github.com/aperturescience/railtime-api"
   },
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.0.0",
