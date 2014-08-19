@@ -54,4 +54,20 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
 
 });
 
+router.get('/list', function(req, res, next) {
+
+  var params = {
+    // 'LastUpdateDate': '1970-08-11 3:35:53 am'
+  };
+
+  request.get(new OAuth('RetrieveStationList', params), function(err, resp, body) {
+
+    if (err || resp.statusCode !== 200)
+      return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
+
+    res.json(body);
+  });
+
+});
+
 module.exports = router;
