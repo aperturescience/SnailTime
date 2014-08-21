@@ -4,6 +4,7 @@ var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
     moment    = require('moment'),
+    maps      = require('../maps/routes'),
     ex        = require('../lib/error'),
     OAuth     = require('../lib/oauth');
 
@@ -40,7 +41,7 @@ router.get('/', function(req, res, next) {
       return res.json(500, new ex.RailtimeException('Could not resolve route'));
     }
 
-    res.json(body);
+    res.json(maps.mapRoutesData(body));
   });
 
 });

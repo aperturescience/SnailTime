@@ -5,7 +5,7 @@ var express   = require('express'),
     router    = express.Router(),
     moment    = require('moment'),
     // _         = require('lodash-node'),
-    // maps      = require('../maps/trains.js'),
+    maps      = require('../maps/trains.js'),
     OAuth     = require('../lib/oauth');
 
 /* GET status */
@@ -27,7 +27,7 @@ router.get('/:id([0-9]+)', function(req, res, next) {
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
-    res.json(body);
+    res.json(maps.mapTrainData(body));
   });
 
 });
