@@ -6,7 +6,8 @@ var express   = require('express'),
     moment    = require('moment'),
     _         = require('lodash-node'),
     maps      = require('../maps'),
-    OAuth     = require('../lib/oauth');
+    utils     = require('../utils'),
+    OAuth     = require('../utils/oauth');
 
 /* GET status */
 router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next) {

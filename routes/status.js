@@ -3,9 +3,9 @@
 var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
-    ex        = require('../lib/error'),
+    ex        = require('../utils/error'),
     maps      = require('../maps'),
-    OAuth     = require('../lib/oauth');
+    OAuth     = require('../utils/oauth');
 
 /* GET status */
 router.get('/', function(req, res, next) {

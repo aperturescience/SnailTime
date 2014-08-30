@@ -5,8 +5,8 @@ var express   = require('express'),
     router    = express.Router(),
     moment    = require('moment'),
     maps      = require('../maps'),
-    ex        = require('../lib/error'),
-    OAuth     = require('../lib/oauth');
+    ex        = require('../utils/error'),
+    OAuth     = require('../utils/oauth');
 
 /* GET status */
 router.get('/', function(req, res, next) {
