@@ -2,21 +2,30 @@
 
 var _ = require('lodash-node');
 
-exports.mapStatus = function(status) {
+function isHealthy(prop) {
+  return _.chain(prop).values().all(function(val) {
+    return val === true;
+  }).value();
+}
+
+exports.status = function(status) {
+
+  var mHealthy  = isHealthy(status.Mobile);
+  var wHealthy  = isHealthy(status.Website);
+  var rHealthy  = status.RealTimeDataAvailable;
 
   return {
+    'all': {
+      'healthy': mHealthy && wHealthy && rHealthy
+    },
     'mobile': {
-      'healty': _.chain(status.Mobile).values().all(function(val) {
-        return val === true;
-      }).value()
+      'healthy': mHealthy
     },
     'website': {
-      'healty': _.chain(status.Website).values().all(function(val) {
-        return val === true;
-      }).value()
+      'healthy': wHealthy
     },
     'realtime': {
-      'healthy': status.RealTimeDataAvailable
+      'healthy': rHealthy
     },
   };
 
