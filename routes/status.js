@@ -4,7 +4,7 @@ var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
     ex        = require('../lib/error'),
-    maps      = require('../maps/status'),
+    maps      = require('../maps'),
     OAuth     = require('../lib/oauth');
 
 /* GET status */
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
       return res.json(500, new ex.RailtimeException('Could not retrieve status'));
     }
 
-    res.json(maps.mapStatus(body));
+    res.json(maps.statuses.status(body));
   });
 
 });

@@ -3,8 +3,7 @@
 var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
-    // _         = require('lodash-node'),
-    locale    = require('../maps/locale.js'),
+    maps      = require('../maps'),
     OAuth     = require('../lib/oauth');
 
 /* GET status */
@@ -12,7 +11,7 @@ router.get('/', function(req, res, next) {
 
   var params = {
     'detailLevel' : 'all',
-    'language'    : locale.translate(req.locale)
+    'language'    : maps.locales.locale(req.locale)
   };
 
   request.get(new OAuth('RetrieveInfoMessagesForSmartPhone', params), function(err, resp, body) {

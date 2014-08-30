@@ -3,7 +3,7 @@
 var _       = require('lodash-node'),
     moment  = require('moment');
 
-exports.mapStation = function(data, locale) {
+exports.station = function(data, locale) {
 
   locale = locale || null;
 
@@ -48,5 +48,26 @@ exports.mapStation = function(data, locale) {
     'id'      : data.Id,
     'trains'  : trains
   };
+
+};
+
+exports.list = function(stations) {
+
+  return _.map(stations, function(station) {
+
+    return {
+      'aliases'    : [],
+      'id'         : station.Id,
+      'belgian'    : station.IsBelgianStation,
+      'commercial' : station.IsCommercialStation,
+      'latitude'   : station.Latitude,
+      'longitude'  : station.Longitude,
+      'de'         : station.NameDE,
+      'en'         : station.NameEN,
+      'fr'         : station.NameFR,
+      'nl'         : station.NameNL,
+    };
+
+  });
 
 };

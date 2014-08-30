@@ -4,7 +4,7 @@
  *  Mapping train data
  */
 
-exports.mapTrainData = function(data) {
+exports.train = function(data) {
 
   return data;
 

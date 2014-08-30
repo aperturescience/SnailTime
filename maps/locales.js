@@ -1,6 +1,6 @@
 'use strict';
 
-exports.translate = function(locale) {
+exports.locale = function(locale) {
 
   switch(locale) {
     case 'fr':
