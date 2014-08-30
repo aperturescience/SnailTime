@@ -69,6 +69,10 @@ router.get('/list', function(req, res, next) {
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
+    // basic cache control
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Expires', new Date(Date.now() + 86400000).toUTCString());
+
     res.json(maps.stations.list(body));
   });
 
