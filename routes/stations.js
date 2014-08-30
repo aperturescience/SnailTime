@@ -43,6 +43,9 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
     } else if (req.params.subset === 'departures') {
       sort = 'departure';
       reject = function(train) { return train.departure === null; };
+    } else {
+      sort = 'departure';
+      reject = utils.noop;
     }
 
     body.trains = _.chain(body.trains)
