@@ -3,7 +3,7 @@
 var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
-    moment    = require('moment'),
+    datetime  = require('../utils/datetime'),
     maps      = require('../maps'),
     ex        = require('../utils/error'),
     OAuth     = require('../utils/oauth');
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   var to   = parseInt(req.query.to)   || 0;
 
   var searchType = 1;
-  var dateTime   = moment().zone('+0200').format('YYYY-MM-DD HH:mm:ss');
+  var dateTime   = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
 
   if (req.query.arrival) { // user requested specific arrival time
     searchType  = 0;
@@ -41,7 +41,7 @@ router.get('/', function(req, res, next) {
       return res.json(500, new ex.RailtimeException('Could not resolve route'));
     }
 
-    res.json(maps.routes.routesData(body));
+    res.json(maps.routes.route(body));
   });
 
 });

@@ -3,21 +3,18 @@
 var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
-    moment    = require('moment'),
     _         = require('lodash-node'),
     maps      = require('../maps'),
     utils     = require('../utils'),
+    datetime  = require('../utils/datetime'),
     OAuth     = require('../utils/oauth');
 
 /* GET status */
 router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next) {
 
-  var dateTimeFrom = moment()
-    .zone('+0200')
-    .format('YYYY-MM-DD HH:mm:ss');
+  var dateTimeFrom = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
 
-  var dateTimeTo   = moment()
-    .zone('+0200')
+  var dateTimeTo   = datetime.toCET()
     .add(1, 'hours')
     .format('YYYY-MM-DD HH:mm:ss');
 

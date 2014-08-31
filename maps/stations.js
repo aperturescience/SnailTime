@@ -1,7 +1,7 @@
 'use strict';
 
-var _       = require('lodash-node'),
-    moment  = require('moment');
+var _         = require('lodash-node'),
+    datetime  = require('../utils/datetime');
 
 exports.station = function(data, locale) {
 
@@ -10,20 +10,20 @@ exports.station = function(data, locale) {
   var trains = _.map(data.Trains, function(train) {
 
     return {
-      'arrival'         : moment(train.ArrivalDateTime).zone('+0200').toISOString() || null,
+      'arrival'         : datetime.toCET(train.ArrivalDateTime).toISOString() || null,
       'arrival_str'     : (function() {
         return train.ArrivalDateTime === null
           ? null
-          : moment(train.ArrivalDateTime).locale(locale).zone('+0200').fromNow();
+          : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow();
       })(),
       'arrival_delay'   : train.ArrivalDelay,
       'has_arrived'     : train.ArrivalDetected,
 
-      'departure'       : moment(train.DepartureDateTime).zone('+0200').toISOString() || null,
+      'departure'       : datetime.toCET(train.DepartureDateTime).toISOString() || null,
       'departure_str'   : (function() {
         return train.DepartureDateTime === null
           ? null
-          : moment(train.DepartureDateTime).locale(locale).zone('+0200').fromNow();
+          : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow();
       })(),
       'departure_delay' : train.DepartureDelay,
       'has_departed'    : train.DepartureDetected,
@@ -45,8 +45,8 @@ exports.station = function(data, locale) {
 
   // TODO: lookup station id in Redis DB to send additional info
   return {
-    'id'      : data.Id,
-    'trains'  : trains
+    'station_id' : data.Id,
+    'trains'     : trains
   };
 
 };
@@ -57,7 +57,7 @@ exports.list = function(stations) {
 
     return {
       'aliases'    : [],
-      'id'         : station.Id,
+      'station_id' : station.Id,
       'belgian'    : station.IsBelgianStation,
       'commercial' : station.IsCommercialStation,
       'latitude'   : station.Latitude,

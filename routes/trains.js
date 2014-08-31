@@ -3,16 +3,14 @@
 var express   = require('express'),
     request   = require('request'),
     router    = express.Router(),
-    moment    = require('moment'),
+    datetime  = require('../utils/datetime'),
     maps      = require('../maps'),
     OAuth     = require('../utils/oauth');
 
 /* GET status */
 router.get('/:id([0-9]+)', function(req, res, next) {
 
-  var requestedDate = moment()
-    .zone('+0200')
-    .format('YYYY-MM-DD HH:mm:ss');
+  var requestedDate = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
 
   var params = {
     'requestedDate' : requestedDate,
