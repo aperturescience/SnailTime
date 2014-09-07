@@ -8,7 +8,7 @@ var pjson   = require('../package.json');
 router.get('/', function(req, res) {
   res.json({
     'version'     : pjson.version,
-    'author'      : pjson.contributors,
+    'authors'     : pjson.contributors,
     'website'     : pjson.website,
     'repository'  : pjson.repository.url
   });
