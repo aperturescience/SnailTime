@@ -10,22 +10,26 @@ function isHealthy(prop) {
 
 exports.status = function(status) {
 
-  var mHealthy  = isHealthy(status.Mobile);
-  var wHealthy  = isHealthy(status.Website);
-  var rHealthy  = status.RealTimeDataAvailable;
+  var health = {
+    mobile    : isHealthy(status.Mobile),
+    website   : isHealthy(status.Website),
+    realtime  : status.RealTimeDataAvailable
+  };
+
+  health.all = health.mobile && health.website && health.realtime;
 
   return {
     'all': {
-      'healthy': mHealthy && wHealthy && rHealthy
+      'healthy': health.all
     },
     'mobile': {
-      'healthy': mHealthy
+      'healthy': health.mobile
     },
     'website': {
-      'healthy': wHealthy
+      'healthy': health.website
     },
     'realtime': {
-      'healthy': rHealthy
+      'healthy': health.realtime
     },
   };
 
