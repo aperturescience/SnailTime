@@ -2,6 +2,11 @@
 var debug = require('debug')('railtime-api');
 var app = require('../app');
 
+/* Check for environment variables */
+if (!process.env.RAILTIME_CONSUMER_KEY || !process.env.RAILTIME_CONSUMER_SECRET) {
+  console.warn('One or more required environment variables are not set.\nThe API might not function correctly.');
+}
+
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
