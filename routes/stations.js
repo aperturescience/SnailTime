@@ -55,7 +55,8 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
 
 });
 
-router.get('/list', function(req, res, next) {
+/* GET index */
+router.get('/', function(req, res, next) {
 
   var params = {
     // 'LastUpdateDate': '1970-08-11 3:35:53 am'
