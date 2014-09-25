@@ -10,21 +10,21 @@ exports.station = function(data, locale) {
   var trains = _.map(data.Trains, function(train) {
 
     return {
-      'arrival'         : datetime.toCET(train.ArrivalDateTime).toISOString() || null,
-      'arrival_str'     : (function() {
-        return train.ArrivalDateTime === null
-          ? null
-          : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow();
-      })(),
+      'arrival'         : train.ArrivalDateTime ?
+                          datetime.toCET(train.ArrivalDateTime).toISOString() :
+                          null,
+      'arrival_str'     : train.ArrivalDateTime ?
+                          datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow() :
+                          null,
       'arrival_delay'   : train.ArrivalDelay,
       'has_arrived'     : train.ArrivalDetected,
 
-      'departure'       : datetime.toCET(train.DepartureDateTime).toISOString() || null,
-      'departure_str'   : (function() {
-        return train.DepartureDateTime === null
-          ? null
-          : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow();
-      })(),
+      'departure'       : train.DepartureDateTime ?
+                          datetime.toCET(train.DepartureDateTime).toISOString() :
+                          null,
+      'departure_str'   : train.DepartureDateTime ?
+                          datetime.toCET(train.DepartureDateTime).locale(locale).fromNow() :
+                          null,
       'departure_delay' : train.DepartureDelay,
       'has_departed'    : train.DepartureDetected,
 
