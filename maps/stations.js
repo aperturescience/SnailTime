@@ -51,7 +51,7 @@ exports.station = function(data, locale) {
 
 };
 
-exports.list = function(stations) {
+exports.list = function(stations, locale) {
 
   /*
     Show only Belgian
@@ -65,17 +65,28 @@ exports.list = function(stations) {
 
   return _.map(stations, function(station) {
 
+    var stationName = station.NameNL;
+    switch(locale) {
+      case 'fr':
+        stationName = station.NameFR;
+        break;
+      case 'nl':
+        // NL is default
+        break;
+      case 'de':
+        stationName = station.NameDE;
+        break;
+      case 'en':
+        stationName = station.NameEN;
+        break;
+    }
+
     return {
       //'aliases'    : [],
       'id' : station.Id,
       //'belgian'    : station.IsBelgianStation,
       //'commercial' : station.IsCommercialStation,
-      'name': {
-        'de'         : station.NameDE,
-        'en'         : station.NameEN,
-        'fr'         : station.NameFR,
-        'nl'         : station.NameNL,
-      },
+      'name': stationName,
       'location': {
         'latitude'   : station.Latitude,
         'longitude'  : station.Longitude,

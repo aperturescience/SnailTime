@@ -71,7 +71,7 @@ router.get('/', function(req, res, next) {
     res.setHeader('Cache-Control', 'public, max-age=86400');
     res.setHeader('Expires', new Date(Date.now() + 86400000).toUTCString());
 
-    res.json(maps.stations.list(body));
+    res.json(maps.stations.list(body, req.locale));
   });
 
 });
