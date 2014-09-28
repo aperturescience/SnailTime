@@ -10,42 +10,46 @@ exports.station = function(data, locale) {
   var trains = _.map(data.Trains, function(train) {
 
     return {
-      'arrival'         : train.ArrivalDateTime ?
-                          datetime.toCET(train.ArrivalDateTime).toISOString() :
-                          null,
-      'arrival_str'     : train.ArrivalDateTime ?
-                          datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow() :
-                          null,
-      'arrival_delay'   : train.ArrivalDelay,
-      'has_arrived'     : train.ArrivalDetected,
-
-      'departure'       : train.DepartureDateTime ?
-                          datetime.toCET(train.DepartureDateTime).toISOString() :
-                          null,
-      'departure_str'   : train.DepartureDateTime ?
-                          datetime.toCET(train.DepartureDateTime).locale(locale).fromNow() :
-                          null,
-      'departure_delay' : train.DepartureDelay,
-      'has_departed'    : train.DepartureDetected,
-
-      'track'           : train.Track,
+      'number'          : train.TrainNumber,
+      'type'            : train.CommercialTypes[0] || null,
 
       'origin'          : train.Origins[0],
       'destination'     : train.Destinations[0],
 
-      'type'            : train.CommercialTypes[0] || null,
-      'train_number'    : train.TrainNumber,
+      'track'           : train.Track,
 
-      // modifications to regular schedule
-      'route_modified'  : train.RouteModified,
-      'track_modified'  : train.TrackModified,
+      'arrival'         : train.ArrivalDateTime ?
+                          {
+                            'time'     : datetime.toCET(train.ArrivalDateTime).toISOString(),
+                            'relative' : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow(),
+                            'delay'    : train.ArrivalDelay,
+                            'arrived'  : train.ArrivalDetected,
+                          } :
+                          null,
+
+      'departure'       : train.DepartureDateTime ?
+                          {
+                            'time'     : datetime.toCET(train.DepartureDateTime).toISOString(),
+                            'relative' : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow(),
+                            'delay'    : train.DepartureDelay,
+                            'departed' : train.DepartureDetected,
+                          } :
+                          null,
+
+      // Modifications to regular schedule
+      'modified'        : train.RouteModified || train.TrackModified ?
+                          {
+                            'route' : train.RouteModified,
+                            'track' : train.TrackModified
+                          } :
+                          false
     };
 
   });
 
   // TODO: lookup station id in Redis DB to send additional info
   return {
-    'station_id' : data.Id,
+    'id'         : data.Id,
     'trains'     : trains
   };
 
