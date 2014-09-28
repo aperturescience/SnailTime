@@ -15,7 +15,7 @@ exports.disruption = function(disruptions) {
       'cause'       : disruption.Cause.trim(),
       'consequence' : disruption.Consequence.trim(),
       'solution'    : disruption.Solution.trim() || null,
-      'status'      : disruption.Status
+      'updated'     : disruption.Status === 1
     };
 
   });
