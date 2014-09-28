@@ -63,7 +63,7 @@ exports.list = function(stations) {
     IsDeleted: false
   });
 
-  return _.compact(_.map(stations, function(station) {
+  return _.map(stations, function(station) {
 
     return {
       //'aliases'    : [],
@@ -82,6 +82,6 @@ exports.list = function(stations) {
       }
     };
 
-  }));
+  });
 
 };
