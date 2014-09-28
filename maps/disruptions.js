@@ -9,7 +9,7 @@ exports.disruption = function(disruptions) {
 
     return {
       'id'          : parseInt(disruption.Id),
-      'priority'    : disruption.Priority,
+      //'priority'    : disruption.Priority, // Not used in the app
       'date'        : datetime.toCET(disruption.DateTime).toISOString(),
       'title'       : disruption.Title.trim(),
       'cause'       : disruption.Cause.trim(),
