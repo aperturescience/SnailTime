@@ -16,10 +16,12 @@ router.get('/', function(req, res, next) {
 
   request.get(new OAuth('RetrieveInfoMessagesForSmartPhone', params), function(err, resp, body) {
 
+    var disruption = maps.disruptions.disruption(body);
+
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
-    res.json(body);
+    res.json(disruption);
   });
 
 });
