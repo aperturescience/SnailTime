@@ -53,21 +53,35 @@ exports.station = function(data, locale) {
 
 exports.list = function(stations) {
 
-  return _.map(stations, function(station) {
+  /*
+    Show only Belgian
+    Commercial stations
+  */
+  stations = _.filter(stations, {
+    IsBelgianStation: true,
+    IsCommercialStation: true,
+    IsDeleted: false
+  });
+
+  return _.compact(_.map(stations, function(station) {
 
     return {
-      'aliases'    : [],
-      'station_id' : station.Id,
-      'belgian'    : station.IsBelgianStation,
-      'commercial' : station.IsCommercialStation,
-      'latitude'   : station.Latitude,
-      'longitude'  : station.Longitude,
-      'de'         : station.NameDE,
-      'en'         : station.NameEN,
-      'fr'         : station.NameFR,
-      'nl'         : station.NameNL,
+      //'aliases'    : [],
+      'id' : station.Id,
+      //'belgian'    : station.IsBelgianStation,
+      //'commercial' : station.IsCommercialStation,
+      'name': {
+        'de'         : station.NameDE,
+        'en'         : station.NameEN,
+        'fr'         : station.NameFR,
+        'nl'         : station.NameNL,
+      },
+      'location': {
+        'latitude'   : station.Latitude,
+        'longitude'  : station.Longitude,
+      }
     };
 
-  });
+  }));
 
 };
