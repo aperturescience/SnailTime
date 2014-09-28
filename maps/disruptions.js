@@ -5,7 +5,6 @@ var _         = require('lodash-node'),
 
 exports.disruption = function(disruptions) {
 
-  // TODO: Convert ASP.Net date to ISO standard
   return _.map(disruptions, function(disruption) {
 
     return {
