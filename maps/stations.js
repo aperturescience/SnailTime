@@ -18,31 +18,32 @@ exports.station = function(data, locale) {
 
       'track'           : train.Track,
 
-      'arrival'         : train.ArrivalDateTime ?
-                          {
-                            'time'     : datetime.toCET(train.ArrivalDateTime).toISOString(),
-                            'relative' : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow(),
-                            'delay'    : train.ArrivalDelay,
-                            'arrived'  : train.ArrivalDetected,
-                          } :
-                          null,
+      'arrival'         : train.ArrivalDateTime
+      ? {
+        'time'     : datetime.toCET(train.ArrivalDateTime).toISOString(),
+        'relative' : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow(),
+        'delay'    : train.ArrivalDelay,
+        'arrived'  : train.ArrivalDetected,
+      }
+      : null,
 
-      'departure'       : train.DepartureDateTime ?
-                          {
-                            'time'     : datetime.toCET(train.DepartureDateTime).toISOString(),
-                            'relative' : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow(),
-                            'delay'    : train.DepartureDelay,
-                            'departed' : train.DepartureDetected,
-                          } :
-                          null,
+      'departure'       : train.DepartureDateTime
+      ? {
+        'time'     : datetime.toCET(train.DepartureDateTime).toISOString(),
+        'relative' : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow(),
+        'delay'    : train.DepartureDelay,
+        'departed' : train.DepartureDetected,
+      }
+      : null,
 
       // Modifications to regular schedule
-      'modified'        : train.RouteModified || train.TrackModified ?
-                          {
-                            'route' : train.RouteModified,
-                            'track' : train.TrackModified
-                          } :
-                          false
+      'modified'        : train.RouteModified || train.TrackModified
+      ? {
+        'route' : train.RouteModified,
+        'track' : train.TrackModified
+      }
+      : false
+
     };
 
   });
