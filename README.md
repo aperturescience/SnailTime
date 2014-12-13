@@ -12,4 +12,5 @@ Railtime.be API wrapper, written in Node
 |/disruptions |A list of all the train disruptions|
 |/stations    |A list of all the Belgian train stations|
 |/stations/:id|Details of a particular station, includes train arrivals and departures|
-
+|/stations/:id/arrivals|Details of a particular station, arrivals only|
+|/stations/:id/departures|Details of a particular station, departures only|
