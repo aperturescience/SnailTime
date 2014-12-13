@@ -33,3 +33,6 @@ node_modules
 
 # import data files
 import
+
+# ignore redis DBs
+*.rdb

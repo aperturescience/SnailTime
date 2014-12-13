@@ -1,14 +1,31 @@
 #!/usr/bin/env node
+
+'use strict';
+
 var debug = require('debug')('railtime-api');
 var app = require('../app');
 
 /* Check for environment variables */
 if (!process.env.RAILTIME_CONSUMER_KEY || !process.env.RAILTIME_CONSUMER_SECRET) {
   console.warn('One or more required environment variables are not set.\nThe API might not function correctly.');
+  process.exit(0);
 }
 
-app.set('port', process.env.PORT || 3000);
+/* start Redis database connection */
+var redis   = require('redis'),
+    client  = redis.createClient();
 
-var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+// TODO: better Redis connection error handling
+client.on('error', function (err) {
+  console.log('Error ' + err);
 });
+
+function startExpress() {
+  app.set('port', process.env.PORT || 3000);
+
+  var server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+  });
+}
+
+client.on('ready', startExpress);
