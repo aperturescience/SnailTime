@@ -12,15 +12,15 @@ exports.station = function(station, locale, callback) {
   var trains = _.map(station.Trains, function(train) {
 
     return {
-      'number'          : train.TrainNumber,
-      'type'            : train.CommercialTypes[0] || undefined,
+      'number'     : train.TrainNumber,
+      'type'       : train.CommercialTypes[0] || undefined,
 
-      'origin'          : train.Origins[0],
-      'destination'     : train.Destinations[0],
+      'origin'     : train.Origins[0],
+      'destination': train.Destinations[0],
 
-      'track'           : train.Track,
+      'track'      : train.Track,
 
-      'arrival'         : train.ArrivalDateTime
+      'arrival'    : train.ArrivalDateTime
       ? {
         'time'     : datetime.toCET(train.ArrivalDateTime).toISOString(),
         'relative' : datetime.toCET(train.ArrivalDateTime).locale(locale).fromNow(),
@@ -29,7 +29,7 @@ exports.station = function(station, locale, callback) {
       }
       : undefined,
 
-      'departure'       : train.DepartureDateTime
+      'departure'  : train.DepartureDateTime
       ? {
         'time'     : datetime.toCET(train.DepartureDateTime).toISOString(),
         'relative' : datetime.toCET(train.DepartureDateTime).locale(locale).fromNow(),
@@ -39,7 +39,7 @@ exports.station = function(station, locale, callback) {
       : undefined,
 
       // Modifications to regular schedule
-      'modified'        : train.RouteModified || train.TrackModified
+      'modified'   : train.RouteModified || train.TrackModified
       ? {
         'route' : train.RouteModified,
         'track' : train.TrackModified
