@@ -35,13 +35,21 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
       var sort, reject;
 
       if (req.params.subset === 'arrivals') {
-        sort = 'arrival';
-        reject = function(train) { return train.arrival === null; };
+
+        sort   = 'arrival';
+        reject = function(train) {
+          return train.arrival === null;
+        };
+
       } else if (req.params.subset === 'departures') {
-        sort = 'departure';
-        reject = function(train) { return train.departure === null; };
+
+        sort   = 'departure';
+        reject = function(train) {
+          return train.departure === null;
+        };
+
       } else {
-        sort = 'departure';
+        sort   = 'departure';
         reject = utils.noop;
       }
 
