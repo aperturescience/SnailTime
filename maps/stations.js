@@ -5,11 +5,11 @@ var _         = require('lodash-node'),
     stations  = require('../db/stations'),
     async     = require('async');
 
-exports.station = function(data, locale, callback) {
+exports.station = function(station, locale, callback) {
 
   locale = locale || null;
 
-  var trains = _.map(data.Trains, function(train) {
+  var trains = _.map(station.Trains, function(train) {
 
     return {
       'number'          : train.TrainNumber,
@@ -54,7 +54,7 @@ exports.station = function(data, locale, callback) {
 
     station: function(callback) {
 
-      stations.byId(data.Id, function(err, station) {
+      stations.byId(station.Id, function(err, station) {
         if (err)
           callback(err);
         else
