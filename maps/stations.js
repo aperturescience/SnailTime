@@ -13,7 +13,7 @@ exports.station = function(station, locale, callback) {
 
     return {
       'number'          : train.TrainNumber,
-      'type'            : train.CommercialTypes[0] || null,
+      'type'            : train.CommercialTypes[0] || undefined,
 
       'origin'          : train.Origins[0],
       'destination'     : train.Destinations[0],
@@ -27,7 +27,7 @@ exports.station = function(station, locale, callback) {
         'delay'    : train.ArrivalDelay,
         'arrived'  : train.ArrivalDetected,
       }
-      : null,
+      : undefined,
 
       'departure'       : train.DepartureDateTime
       ? {
@@ -36,7 +36,7 @@ exports.station = function(station, locale, callback) {
         'delay'    : train.DepartureDelay,
         'departed' : train.DepartureDetected,
       }
-      : null,
+      : undefined,
 
       // Modifications to regular schedule
       'modified'        : train.RouteModified || train.TrackModified

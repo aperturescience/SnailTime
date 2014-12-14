@@ -14,7 +14,7 @@ exports.disruption = function(disruptions) {
       'title'       : disruption.Title.trim(),
       'cause'       : disruption.Cause.trim(),
       'consequence' : disruption.Consequence.trim(),
-      'solution'    : disruption.Solution.trim() || null,
+      'solution'    : disruption.Solution.trim() || undefined,
       'updated'     : disruption.Status === 1
     };
 
