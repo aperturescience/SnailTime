@@ -24,7 +24,14 @@ router.get('/:id([0-9]+)', function(req, res, next) {
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
-    res.json(maps.trains.train(body));
+    maps.trains.train(body, req.locale, function(err, train) {
+
+      if (err)
+        res.send(resp.statusCode || 500, { error: err });
+      else
+        res.json(train);
+    });
+
   });
 
 });
