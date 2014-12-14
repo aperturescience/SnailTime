@@ -32,6 +32,9 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
 
     maps.stations.station(body, req.locale, function(err, body) {
 
+      if (err)
+        return res.send(resp.statusCode || 500, { error: err });
+
       var sort, reject;
 
       if (req.params.subset === 'arrivals') {
