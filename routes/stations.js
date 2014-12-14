@@ -30,27 +30,28 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
     if (err || resp.statusCode !== 200)
       return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
 
-    body = maps.stations.station(body, req.locale);
+    maps.stations.station(body, req.locale, function(err, body) {
 
-    var sort, reject;
+      var sort, reject;
 
-    if (req.params.subset === 'arrivals') {
-      sort = 'arrival';
-      reject = function(train) { return train.arrival === null; };
-    } else if (req.params.subset === 'departures') {
-      sort = 'departure';
-      reject = function(train) { return train.departure === null; };
-    } else {
-      sort = 'departure';
-      reject = utils.noop;
-    }
+      if (req.params.subset === 'arrivals') {
+        sort = 'arrival';
+        reject = function(train) { return train.arrival === null; };
+      } else if (req.params.subset === 'departures') {
+        sort = 'departure';
+        reject = function(train) { return train.departure === null; };
+      } else {
+        sort = 'departure';
+        reject = utils.noop;
+      }
 
-    body.trains = _.chain(body.trains)
-      .reject(reject)
-      .sortBy(sort)
-      .value();
+      body.trains = _.chain(body.trains)
+        .reject(reject)
+        .sortBy(sort)
+        .value();
 
-    res.json(body);
+      res.json(body);
+    });
   });
 
 });

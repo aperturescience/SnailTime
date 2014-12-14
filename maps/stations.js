@@ -1,9 +1,11 @@
 'use strict';
 
 var _         = require('lodash-node'),
-    datetime  = require('../utils/datetime');
+    datetime  = require('../utils/datetime'),
+    stations  = require('../db/stations'),
+    async     = require('async');
 
-exports.station = function(data, locale) {
+exports.station = function(data, locale, callback) {
 
   locale = locale || null;
 
@@ -48,11 +50,77 @@ exports.station = function(data, locale) {
 
   });
 
-  // TODO: lookup station id in Redis DB to send additional info
-  return {
-    'id'         : data.Id,
-    'trains'     : trains
-  };
+  async.parallel({
+
+    station: function(callback) {
+
+      stations.byId(data.Id, function(err, station) {
+        if (err)
+          callback(err);
+        else
+          callback(null, station);
+      });
+
+    },
+
+    trains: function(callback) {
+
+      async.each(trains, function(train, callback) {
+
+        async.parallel({
+
+          origin: function(callback) {
+
+            stations.byId(train.origin, function(err, station) {
+              if (err)
+                callback(err);
+              else
+                callback(null, station);
+            });
+
+          },
+
+          destination: function(callback) {
+
+            stations.byId(train.destination, function(err, station) {
+              if (err)
+                callback(err);
+              else
+                callback(null, station);
+            });
+
+          }
+
+        }, function(err, results) {
+
+          if (err) {
+            callback(err);
+          } else {
+            train.origin = results.origin;
+            train.destination = results.destination;
+
+            callback(null);
+          }
+
+        });
+
+      }, function(err) {
+        if (err)
+          callback(err);
+        else
+          callback(null, trains);
+      });
+
+    }
+
+  }, function(err, results) {
+
+    callback(null, {
+      'station' : results.station,
+      'trains'  : results.trains
+    });
+
+  });
 
 };
 
