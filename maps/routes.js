@@ -36,6 +36,8 @@ exports.route = function(directions, locale, callback) {
       : undefined,
 
       'connections' : route.Connections,
+      'types'       : route.CommercialTypes,
+
       'travelTime'  : route.TravelTime,
 
       'transports'  : _.map(route.Transports, function(transport) {
