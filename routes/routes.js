@@ -41,7 +41,14 @@ router.get('/', function(req, res, next) {
       return res.json(500, new ex.RailtimeException('Could not resolve route'));
     }
 
-    res.json(maps.routes.route(body));
+    maps.routes.route(body, req.locale, function(err, directions) {
+      if (err)
+        res.send(resp.statusCode || 500, { error: err });
+      else
+        res.json(directions);
+    });
+
+
   });
 
 });
