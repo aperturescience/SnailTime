@@ -6,7 +6,6 @@ var express   = require('express'),
     router    = express.Router(),
     _         = require('lodash-node'),
     maps      = require('../maps'),
-    utils     = require('../utils'),
     datetime  = require('../utils/datetime'),
     db        = require('../db/stations'),
     OAuth     = require('../utils/oauth');
@@ -73,7 +72,7 @@ router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
 
         } else {
           sort   = 'departure';
-          reject = utils.noop;
+          reject = _.noop;
         }
 
         body.trains = _.chain(body.trains)
