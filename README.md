@@ -53,7 +53,7 @@ Any unrecognized language will default to English.
 **Params**
 
 |Name   | Description | Details |
-|---    | | |
+|---|---|---|
 |from   | Departure station | Could be an ID (int) or a name (string). <br> example: 455 or "gent-sint-pieters" |
 |to   | Arrival station | Could be an ID (int) or a name (string). <br> example: 455 or "gent-sint-pieters" |
 |departure  |Time at which you wish to leave | format: "YYYY-MM-dd HH:mm:ss" <br> example: "2014-12-14 08:00:00" |
