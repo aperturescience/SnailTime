@@ -11,50 +11,6 @@ var express   = require('express'),
     db        = require('../db/stations'),
     OAuth     = require('../utils/oauth');
 
-function makeRequest(req, res, next, params) {
-
-  request.get(new OAuth('RetrieveStationSchedule', params), function(err, resp, body) {
-
-    if (err || resp.statusCode !== 200)
-      return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
-
-    maps.stations.station(body, req.locale, function(err, body) {
-
-      if (err)
-        return res.send(resp.statusCode || 500, { error: err });
-
-      var sort, reject;
-
-      if (req.params.subset === 'arrivals') {
-
-        sort   = 'arrival';
-        reject = function(train) {
-          return train.arrival === null;
-        };
-
-      } else if (req.params.subset === 'departures') {
-
-        sort   = 'departure';
-        reject = function(train) {
-          return train.departure === null;
-        };
-
-      } else {
-        sort   = 'departure';
-        reject = utils.noop;
-      }
-
-      body.trains = _.chain(body.trains)
-        .reject(reject)
-        .sortBy(sort)
-        .value();
-
-      res.json(body);
-    });
-  });
-
-}
-
 /* GET status */
 router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
 
@@ -72,20 +28,64 @@ router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
 
   if (isFinite(req.params.station)) {
     params.stationID = req.params.station;
-    makeRequest(req, res, next, params);
+    makeRequest(params);
   }
 
-  else if (isNaN(req.params.station))
+  else
     db.levenLookup(req.params.station, function(err, result) {
 
       params.stationID = result.id;
 
       // no results from lookup returns Infinity
       if (isFinite(result.score))
-        makeRequest(req, res, next, params);
+        makeRequest(params);
       else
         return res.json(404, new ex.StationNotFoundException());
     });
+
+  function makeRequest(params) {
+
+    request.get(new OAuth('RetrieveStationSchedule', params), function(err, resp, body) {
+
+      if (err || resp.statusCode !== 200)
+        return res.send(resp.statusCode || 500, { error: '¯\\_(ツ)_/¯' });
+
+      maps.stations.station(body, req.locale, function(err, body) {
+
+        if (err)
+          return res.send(resp.statusCode || 500, { error: err });
+
+        var sort, reject;
+
+        if (req.params.subset === 'arrivals') {
+
+          sort   = 'arrival';
+          reject = function(train) {
+            return train.arrival === null;
+          };
+
+        } else if (req.params.subset === 'departures') {
+
+          sort   = 'departure';
+          reject = function(train) {
+            return train.departure === null;
+          };
+
+        } else {
+          sort   = 'departure';
+          reject = utils.noop;
+        }
+
+        body.trains = _.chain(body.trains)
+          .reject(reject)
+          .sortBy(sort)
+          .value();
+
+        res.json(body);
+      });
+    });
+
+  }
 
 });
 
