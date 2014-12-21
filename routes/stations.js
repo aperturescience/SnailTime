@@ -40,7 +40,7 @@ router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
       if (isFinite(result.score))
         makeRequest(params);
       else
-        return res.json(404, new ex.StationNotFoundException());
+        return res.json(404, new ex.StationNotFoundException(req.params.station));
     });
 
   function makeRequest(params) {

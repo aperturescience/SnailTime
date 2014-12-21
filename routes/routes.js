@@ -45,7 +45,7 @@ router.get('/', function(req, res, next) {
         if (isFinite(result.score))
           callback(null, result.id);
         else
-          return res.json(404, new ex.StationNotFoundException());
+          return res.json(404, new ex.StationNotFoundException(req.query.from));
       });
 
     },
@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
         if (isFinite(result.score))
           callback(null, result.id);
         else
-          return res.json(404, new ex.StationNotFoundException());
+          return res.json(404, new ex.StationNotFoundException(req.query.to));
       });
 
     }
