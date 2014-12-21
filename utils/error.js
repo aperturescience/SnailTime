@@ -12,6 +12,10 @@ exports.StationNotFoundException = function(name) {
   return new exports.Exception('Could not find station: ' + name, 'StationNotFoundException', 404);
 };
 
+exports.BadRequestException = function(msg) {
+  return new exports.Exception(msg, 'BadRequestException', 400);
+};
+
 exports.Exception = function(msg, type, code) {
   return {
     'error' : {

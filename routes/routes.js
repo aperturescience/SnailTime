@@ -1,6 +1,7 @@
 'use strict';
 
 var express   = require('express'),
+    _         = require('lodash-node'),
     async     = require('async'),
     db        = require('../db/stations'),
     request   = require('request'),
@@ -12,6 +13,9 @@ var express   = require('express'),
 
 /* GET status */
 router.get('/', function(req, res, next) {
+
+  if (_.isEmpty(req.query.from) || _.isEmpty(req.query.to))
+    return res.json(400, new ex.BadRequestException('Please provide a valid destination and arrival station'));
 
   var searchType = 1;
   var dateTime   = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
