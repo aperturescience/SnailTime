@@ -1,29 +1,17 @@
 'use strict';
 
 var express   = require('express'),
+    ex        = require('../utils/error'),
     request   = require('request'),
     router    = express.Router(),
     _         = require('lodash-node'),
     maps      = require('../maps'),
     utils     = require('../utils'),
     datetime  = require('../utils/datetime'),
+    db        = require('../db/stations'),
     OAuth     = require('../utils/oauth');
 
-/* GET status */
-router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next) {
-
-  var dateTimeFrom = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
-
-  var dateTimeTo   = datetime.toCET()
-    .add(1, 'hours')
-    .format('YYYY-MM-DD HH:mm:ss');
-
-  var params = {
-    'dateTimeFrom'  : dateTimeFrom,
-    'dateTimeTo'    : dateTimeTo,
-    'searchType'    : 0,
-    'stationID'     : req.params.id
-  };
+function makeRequest(req, res, next, params) {
 
   request.get(new OAuth('RetrieveStationSchedule', params), function(err, resp, body) {
 
@@ -64,6 +52,40 @@ router.get('/:id([0-9]+)/:subset(arrivals|departures)?', function(req, res, next
       res.json(body);
     });
   });
+
+}
+
+/* GET status */
+router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
+
+  var dateTimeFrom = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
+
+  var dateTimeTo   = datetime.toCET()
+    .add(1, 'hours')
+    .format('YYYY-MM-DD HH:mm:ss');
+
+  var params = {
+    'dateTimeFrom'  : dateTimeFrom,
+    'dateTimeTo'    : dateTimeTo,
+    'searchType'    : 0,
+  };
+
+  if (isFinite(req.params.station)) {
+    params.stationID = req.params.station;
+    makeRequest(req, res, next, params);
+  }
+
+  else if (isNaN(req.params.station))
+    db.levenLookup(req.params.station, function(err, result) {
+
+      params.stationID = result.id;
+
+      // no results from lookup returns Infinity
+      if (isFinite(result.score))
+        makeRequest(req, res, next, params);
+      else
+        return res.json(404, new ex.StationNotFoundException());
+    });
 
 });
 
