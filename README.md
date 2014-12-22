@@ -24,7 +24,7 @@ If you prefer ID's, a list can be found at `/stations`.
 
 If no matching station can be found, an exception is returned.
 
-```
+```javascript
 {
   error: {
     code: 404,
