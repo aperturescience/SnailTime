@@ -62,3 +62,7 @@ Any unrecognized language will default to English.
 ie.
 
 `/routes?from=455&to=37&departure="2014-12-14 08:00:00"`
+
+or
+
+`/routes?from=gent-sint-pieters&to=antwerpen-centraal&departure="2014-12-14 08:00:00"`
