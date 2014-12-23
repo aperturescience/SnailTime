@@ -18,9 +18,12 @@ Railtime.be API wrapper, written in Node
 
 ## Id's vs strings
 
-Since v0.2.0, the API supports supplying a string as the name of a station.
+**NOTE:**
+If you are consuming this API in an automated way (through an application), we strongly suggest relying on Id's rather than strings because the Levenshtein distance algorithm used for string searching might return unexpected results.
 
-If you prefer ID's, a list can be found at `/stations`.
+A list of stations and their respective Id's can be found at `/stations`.
+
+If you prefer using strings, the API supports supplying a string as the name of a station since v0.2.0.
 
 If no matching station can be found, an exception is returned.
 
