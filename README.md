@@ -1,4 +1,4 @@
-# RailTime API Wrapper
+# 🐌 SnailTime
 
 
 Railtime.be API wrapper, written in Node
@@ -8,7 +8,7 @@ Railtime.be API wrapper, written in Node
 |Route                |Description|
 |---                  |---|
 |/                    |API version information etc.|
-|/status              |The status of the RailTime API and infrastructure|
+|/status              |The status of the API and infrastructure|
 |/disruptions         |A list of all the train disruptions|
 |/stations            |A list of all the Belgian train stations|
 |/stations/:id        |Details of a particular station, includes train arrivals and departures|
