@@ -2,7 +2,7 @@
 
 'use strict';
 
-var debug = require('debug')('railtime-api');
+var debug = require('debug')('snailtime-api');
 var app = require('../app');
 
 /* Check for environment variables */
