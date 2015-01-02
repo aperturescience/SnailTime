@@ -34,7 +34,7 @@ exports.deserialize = function(object) {
  */
 exports.levenLookup = function(needle, limit, callback) {
 
-  // Single parameter is optional
+  // limit parameter is optional
   if (typeof limit === 'function') {
     callback = limit;
     limit = 1;
