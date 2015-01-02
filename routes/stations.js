@@ -14,6 +14,7 @@ var express   = require('express'),
 router.get('/search', function(req, res, next) {
 
   var query = req.query.q;
+  var limit = parseInt(req.query.limit) || 5;
 
   // Early return
   if (_.isUndefined(query)) {
@@ -21,7 +22,7 @@ router.get('/search', function(req, res, next) {
   }
 
   console.log('Searching for ', query);
-  db.levenLookup(query, false, function(err, results) {
+  db.levenLookup(query, limit, function(err, results) {
     if (err) res.json(500, new ex.UnknownException('Error searching for stations'));
 
     return res.json(results);
