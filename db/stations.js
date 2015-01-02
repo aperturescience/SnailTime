@@ -32,7 +32,10 @@ exports.deserialize = function(object) {
 /**
  * Lookup the ID of a train station based on the Levenshtein distance algo
  */
-exports.levenLookup = function(needle, callback) {
+exports.levenLookup = function(needle, single, callback) {
+
+  // Single parameter is optional
+  if (typeof single === 'function') callback = single;
 
   client.HGETALL(['station:names'], function(err, stations) {
 
@@ -45,10 +48,13 @@ exports.levenLookup = function(needle, callback) {
     _.forOwn(stations, function(id, station) {
       var score = leven(needle, station);
       if (score < 5 ) // if the score is larger than 5, it's probably nonsense
-        results.push({ score: score, id: id, station: station });
+        results.push({ score: score, id: parseInt(id), station: station });
     });
 
-    return callback(null, _.min(results, 'score'));
+    if (single)
+      return callback(null, _.min(results, 'score'));
+    else
+      return callback(null, _.first(_.sortBy(results, 'score'), 5));
   });
 
 };
