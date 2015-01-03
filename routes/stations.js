@@ -10,7 +10,26 @@ var express   = require('express'),
     db        = require('../db/stations'),
     OAuth     = require('../utils/oauth');
 
-/* GET status */
+/* SEARCH station */
+router.get('/search', function(req, res, next) {
+
+  var query = req.query.q;
+  var limit = parseInt(req.query.limit) || 5;
+
+  // Early return
+  if (_.isUndefined(query)) {
+    return res.json(400, new ex.BadRequestException('Empty search query'));
+  }
+
+  db.levenLookup(query, limit, function(err, results) {
+    if (err)
+        return res.json(500, new ex.UnknownException('Error searching for stations'));
+
+    return res.json(results);
+  });
+});
+
+/* GET station */
 router.get('/:station/:subset(arrivals|departures)?', function(req, res, next) {
 
   var dateTimeFrom = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
