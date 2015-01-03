@@ -10,11 +10,12 @@ Railtime.be API wrapper, written in Node
 |/                    |API version information etc.|
 |/status              |The status of the API and infrastructure|
 |/disruptions         |A list of all the train disruptions|
+|/search              |Search for a station using a levenshtein lookup algorithm|
 |/stations            |A list of all the Belgian train stations|
 |/stations/:id        |Details of a particular station, includes train arrivals and departures|
 |/stations/:id/arrivals   |Details of a particular station, arrivals only|
 |/stations/:id/departures |Details of a particular station, departures only|
-|/routes          |Request a route from Gent-Sint-Pieters to Antwerpen-Centraal|
+|/routes              |Request a route from Gent-Sint-Pieters to Antwerpen-Centraal|
 
 ## Id's vs strings
 
@@ -51,6 +52,26 @@ Alternatively:
 
 Any unrecognized language will default to English.
 
+## Searching
+You can search for stations using the server (using a levenshtein lookup algorithm), useful for constraint devices (e.g. Spark, Electric Imp, Arduino, ...)
+
+**Params**
+
+|Name   | Description | Details |
+|---|---|---|
+|q  | Search query | The name of the station you're searching for |
+|limit | Limit results | (optional)  The maximum number of returned results, defaults to 5
+
+**Note**
+
+When limit is set to `1` an object will be returned instead of an array.
+
+**Example**
+
+`/search?q=gent-sint-pieters`
+
+`/search?q=gent-sint-pieters&limit=10`
+
 ## Getting directions
 
 **Params**
@@ -62,7 +83,7 @@ Any unrecognized language will default to English.
 |departure  |Time at which you wish to leave | format: "YYYY-MM-dd HH:mm:ss" <br> example: "2014-12-14 08:00:00" |
 |arrival  |Time at which you wish to arrive | format: "YYYY-MM-dd HH:mm:ss" <br> example: "2014-12-14 08:00:00" |
 
-ie.
+**Example**
 
 `/routes?from=455&to=37&departure=2014-12-14 08:00:00`
 
