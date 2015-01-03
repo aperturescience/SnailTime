@@ -21,9 +21,9 @@ router.get('/search', function(req, res, next) {
     return res.json(400, new ex.BadRequestException('Empty search query'));
   }
 
-  console.log('Searching for ', query);
   db.levenLookup(query, limit, function(err, results) {
-    if (err) res.json(500, new ex.UnknownException('Error searching for stations'));
+    if (err)
+        return res.json(500, new ex.UnknownException('Error searching for stations'));
 
     return res.json(results);
   });
