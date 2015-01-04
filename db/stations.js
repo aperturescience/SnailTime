@@ -50,8 +50,21 @@ exports.levenLookup = function(needle, limit, callback) {
     // itterate over stations to find lowest levenshtein distance string
     _.forOwn(stations, function(id, station) {
       var score = leven(needle, station);
-      if (score < 5 ) // if the score is larger than 5, it's probably nonsense
-        results.push({ score: score, id: parseInt(id), station: station });
+
+      // manipulate the score for stations beginning with the specified needle
+      // e.g gent -> gent-sint-pieters, gent-dampoort, ...
+      if (station.indexOf(needle) === 0) {
+        score = 0;
+      }
+
+      // if the score is larger than 5, it's probably nonsense
+      if (score < 5 ) {
+        results.push({
+          score: score,
+          id: parseInt(id),
+          station: station
+        });
+      }
     });
 
     // return as a single object
@@ -59,7 +72,7 @@ exports.levenLookup = function(needle, limit, callback) {
       return callback(null, _.min(results, 'score'));
     // return as an array
     else
-      return callback(null, _.first(_.sortBy(results, 'score'), limit));
+      return callback(null, _.first(_.sortBy(results, ['score', 'station']), limit));
   });
 
 };
