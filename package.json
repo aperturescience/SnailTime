@@ -9,7 +9,7 @@
   "website": "http://demey.io/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aperturescience/railtime-api"
+    "url": "https://github.com/aperturescience/snailtime"
   },
   "scripts": {
     "start": "node ./bin/www"
