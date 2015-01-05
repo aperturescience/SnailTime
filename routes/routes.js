@@ -18,15 +18,17 @@ router.get('/', function(req, res, next) {
     return res.json(400, new ex.BadRequestException('Please provide a valid destination and arrival station'));
 
   var searchType = 1;
-  var dateTime   = datetime.toCET().format('YYYY-MM-DD HH:mm:ss');
+  var dateTime;
 
   if (req.query.arrival) { // user requested specific arrival time
     searchType  = 0;
     dateTime    = req.query.arrival;
   } else {                // user requested specific departure time or "now"
     searchType  = 1;
-    dateTime    = req.query.departure || dateTime;
+    dateTime    = req.query.departure || undefined;
   }
+
+  dateTime   = datetime.toCET(dateTime).format('YYYY-MM-DD HH:mm:ss');
 
   var params = {
     resultCountBefore   : 0,
