@@ -68,9 +68,9 @@ When limit is set to `1` an object will be returned instead of an array.
 
 **Example**
 
-`/search?q=gent-sint-pieters`
+`/search?q=gent`
 
-`/search?q=gent-sint-pieters&limit=10`
+`/search?q=gent&limit=10`
 
 ## Getting directions
 
