@@ -17,6 +17,20 @@ Railtime.be API wrapper, written in Node
 |/stations/:id/departures |Details of a particular station, departures only|
 |/routes              |Request a route from Gent-Sint-Pieters to Antwerpen-Centraal|
 
+## Localisation and i18n
+
+The language you'd like to use is specified by supplying the **Accept-Language** header in your request as defined in [RFC 2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4).
+
+List of languages that are accepted:
+
+- **nl, fr, de, en**
+
+Alternatively:
+
+- **nl-BE, fr-FR, de-DE, en-US, etc.**
+
+Any unrecognized language will default to English.
+
 ## Id's vs strings
 
 **NOTE:**
@@ -37,20 +51,6 @@ If no matching station can be found, an exception is returned.
   }
 }
 ```
-
-## Localisation and i18n
-
-The language you'd like to use is specified by supplying the **Accept-Language** header in your request as defined in [RFC 2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4).
-
-List of languages that are accepted:
-
-- **nl, fr, de, en**
-
-Alternatively:
-
-- **nl-BE, fr-FR, de-DE, en-US, etc.**
-
-Any unrecognized language will default to English.
 
 ## Searching
 You can search for stations using the server (using a levenshtein lookup algorithm), useful for constraint devices (e.g. Spark, Electric Imp, Arduino, ...)
