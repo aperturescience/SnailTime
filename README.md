@@ -59,8 +59,8 @@ You can search for stations using the server (using a levenshtein lookup algorit
 
 |Name   | Description | Details |
 |---|---|---|
-|q  | Search query | The name of the station you're searching for |
-|limit | Limit results | (optional)  The maximum number of returned results, defaults to 5
+|q  | Search query | The name of the station you're searching for <br> example: "gent" |
+|limit | Limit results | (optional)  The maximum number of returned results, defaults to 5 <br> example: 10
 
 **Note**
 
