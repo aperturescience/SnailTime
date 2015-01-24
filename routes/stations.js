@@ -16,14 +16,19 @@ router.get('/search', function(req, res, next) {
   var query = req.query.q;
   var limit = parseInt(req.query.limit) || 5;
 
-  // Early return
+  // No search query specified
   if (_.isUndefined(query)) {
     return res.json(400, new ex.BadRequestException('Empty search query'));
   }
 
+  // Query too small
+  if (query.length < 3) {
+    return res.json(400, new ex.BadRequestException('Search query too small'));
+  }
+
   db.levenLookup(query, limit, function(err, results) {
     if (err)
-        return res.json(500, new ex.UnknownException('Error searching for stations'));
+      return res.json(500, new ex.UnknownException('Error searching for stations'));
 
     return res.json(results);
   });
