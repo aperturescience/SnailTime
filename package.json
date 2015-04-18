@@ -19,7 +19,7 @@
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
     "express": "~4.2.0",
-    "hiredis": "^0.1.17",
+    "hiredis": "^0.3.0",
     "leven": "^1.0.1",
     "locale": "0.0.17",
     "lodash-node": "^2.4.1",
