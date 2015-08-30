@@ -3,6 +3,8 @@
 
 Railtime.be API wrapper, written in Node
 
+**DEPRECATED**: RailTime no longer exists, this repository only exists as an archive.
+
 ## Available routes
 
 |Route                |Description|
